@@ -1,0 +1,307 @@
+2025-07-03 20:26:48,297 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 15:55:47,702 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 15:58:13,664 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:00:41,121 - app.services.websocket_manager - INFO - Client connected to interview demo_interview
+2025-07-04 16:02:11,154 - app.services.websocket_manager - INFO - Client disconnected from interview demo_interview
+2025-07-04 16:19:25,806 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:19:25,967 - app.services.ai_service - ERROR - Error analyzing resume: object ChatCompletion can't be used in 'await' expression
+2025-07-04 16:21:24,168 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:21:24,201 - app.services.ai_service - ERROR - Error analyzing resume: object ChatCompletion can't be used in 'await' expression
+2025-07-04 16:21:24,323 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:21:32,989 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:22:38,612 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:22:38,621 - app.services.ai_service - ERROR - Error analyzing resume: 7 validation errors for ResumeAnalysis
+personal_info
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+education
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+projects
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+summary
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+recommended_questions
+  Field required [type=missing, input_value={'PersonalInformation': {...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:24:42,406 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:24:42,410 - app.services.ai_service - ERROR - Error analyzing resume: 7 validation errors for ResumeAnalysis
+personal_info
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+education
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+projects
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+summary
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+recommended_questions
+  Field required [type=missing, input_value={'PersonalInformation': {...e testing techniques?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:25:31,776 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:26:17,235 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:26:17,246 - app.services.ai_service - ERROR - Error analyzing resume: 7 validation errors for ResumeAnalysis
+personal_info
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+education
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+projects
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+summary
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+recommended_questions
+  Field required [type=missing, input_value={'Personal Information': ...ative Solutions Inc.?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:29:19,328 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:29:24,210 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:30:09,476 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:30:09,483 - app.services.ai_service - ERROR - Error analyzing resume: 7 validation errors for ResumeAnalysis
+personal_info
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+education
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+projects
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+summary
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+recommended_questions
+  Field required [type=missing, input_value={'PersonalInformation': {...ng framework project?']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:35:08,454 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:35:18,003 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:35:25,732 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:35:56,926 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:35:56,952 - app.services.ai_service - ERROR - Error analyzing resume: 18 validation errors for ResumeAnalysis
+skills.0.category
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.0.items
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.category
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.items
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.category
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.items
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.category
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.items
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.category
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.items
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.category
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.items
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.position
+  Field required [type=missing, input_value={'company': 'TechSolution... performance testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.duration
+  Field required [type=missing, input_value={'company': 'TechSolution... performance testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.position
+  Field required [type=missing, input_value={'company': 'Innovative S...via targeted testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.duration
+  Field required [type=missing, input_value={'company': 'Innovative S...via targeted testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.position
+  Field required [type=missing, input_value={'company': 'QualitySoft ...m performance by 15%.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.duration
+  Field required [type=missing, input_value={'company': 'QualitySoft ...m performance by 15%.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:41:36,990 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:41:36,999 - app.services.ai_service - ERROR - Error analyzing resume: 18 validation errors for ResumeAnalysis
+skills.0.category
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.0.items
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.category
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.items
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.category
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.items
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.category
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.items
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.category
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.items
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.category
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.items
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.position
+  Field required [type=missing, input_value={'company': 'TechSolution...h performance testing']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.duration
+  Field required [type=missing, input_value={'company': 'TechSolution...h performance testing']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.position
+  Field required [type=missing, input_value={'company': 'Innovative S... via targeted testing']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.duration
+  Field required [type=missing, input_value={'company': 'Innovative S... via targeted testing']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.position
+  Field required [type=missing, input_value={'company': 'QualitySoft ...em performance by 15%']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.duration
+  Field required [type=missing, input_value={'company': 'QualitySoft ...em performance by 15%']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:41:37,118 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:41:45,706 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:43:08,335 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:43:20,525 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:43:50,241 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:43:50,254 - app.services.ai_service - ERROR - Error analyzing resume: 18 validation errors for ResumeAnalysis
+skills.0.category
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.0.items
+  Field required [type=missing, input_value={'type': 'End-to-End Test...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.category
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.1.items
+  Field required [type=missing, input_value={'type': 'Quality Assuran...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.category
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.2.items
+  Field required [type=missing, input_value={'type': 'Mobile Applicat...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.category
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.3.items
+  Field required [type=missing, input_value={'type': 'Embedded System...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.category
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.4.items
+  Field required [type=missing, input_value={'type': 'Test Automation...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.category
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+skills.5.items
+  Field required [type=missing, input_value={'type': 'Agile Methodolo...'proficiency': 'Expert'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.position
+  Field required [type=missing, input_value={'company': 'TechSolution... performance testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.0.duration
+  Field required [type=missing, input_value={'company': 'TechSolution... performance testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.position
+  Field required [type=missing, input_value={'company': 'Innovative S...via targeted testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.1.duration
+  Field required [type=missing, input_value={'company': 'Innovative S...via targeted testing.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.position
+  Field required [type=missing, input_value={'company': 'QualitySoft ...m performance by 15%.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+experience.2.duration
+  Field required [type=missing, input_value={'company': 'QualitySoft ...m performance by 15%.']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+2025-07-04 16:48:15,926 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:48:22,299 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:50:03,819 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:50:08,569 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 16:51:10,425 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 16:52:24,064 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 16:52:28,827 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:16:13,885 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 18:16:23,833 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:29:11,792 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 18:29:11,853 - app.services.ai_service - ERROR - Error generating questions: object ChatCompletion can't be used in 'await' expression
+2025-07-04 18:29:52,443 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 18:29:58,397 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:30:09,386 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:32:08,261 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 18:32:08,265 - app.services.ai_service - ERROR - Error generating questions: object ChatCompletion can't be used in 'await' expression
+2025-07-04 18:33:19,226 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 18:33:25,207 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:35:04,287 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 18:42:16,462 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 18:46:07,876 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 18:46:16,917 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:47:22,137 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-04 18:51:08,816 - main - INFO - Shutting down AI Interview Agent Backend
+2025-07-04 18:51:14,276 - main - INFO - Starting AI Interview Agent Backend
+2025-07-04 18:51:53,721 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

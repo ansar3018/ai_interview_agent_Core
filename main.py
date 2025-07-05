@@ -1,0 +1,84 @@
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+import uvicorn
+import logging
+import openai
+from app.database import engine, Base
+from app.routers import auth, candidates, interviews, resume_analysis, reports
+from app.core.config import settings
+from app.core.logging_config import setup_logging
+from app.services.websocket_manager import manager
+
+# Setup logging
+setup_logging()
+logger = logging.getLogger(__name__)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    logger.info("Starting AI Interview Agent Backend")
+    Base.metadata.create_all(bind=engine)
+    yield
+    # Shutdown
+    logger.info("Shutting down AI Interview Agent Backend")
+
+app = FastAPI(
+    title="AI Interview Agent API",
+    description="Intelligent Virtual Interview Platform Backend",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
+app.include_router(candidates.router, prefix="/api/v1/candidates", tags=["Candidates"])
+app.include_router(interviews.router, prefix="/api/v1/interviews", tags=["Interviews"])
+app.include_router(resume_analysis.router, prefix="/api/v1/resume", tags=["Resume Analysis"])
+app.include_router(reports.router, prefix="/api/v1/reports", tags=["Reports"])
+
+@app.get("/")
+async def root():
+    return {
+        "message": "AI Interview Agent API",
+        "version": "1.0.0",
+        "status": "active",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "database": "connected",
+        "ai_services": "active"
+    }
+
+# WebSocket endpoint for real-time interview
+@app.websocket("/ws/interview/{interview_id}")
+async def websocket_interview_endpoint(websocket: WebSocket, interview_id: str):
+    await manager.connect(websocket, interview_id)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            await manager.handle_message(interview_id, data)
+    except WebSocketDisconnect:
+        manager.disconnect(interview_id)
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host=settings.HOST,
+        port=settings.PORT,
+        reload=settings.DEBUG,
+        log_level="info"
+    )
