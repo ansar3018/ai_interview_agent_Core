@@ -3,6 +3,7 @@ from typing import Dict, List
 import json
 import logging
 from datetime import datetime
+from app.services.langchain_service import langchain_service
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,10 @@ class ConnectionManager:
                 await self._handle_next_question(interview_id, data)
             elif message_type == "transcript_update":
                 await self._handle_transcript_update(interview_id, data)
+            elif message_type == "candidate_response":
+                await self._handle_candidate_response(interview_id, data)
+            elif message_type == "request_feedback":
+                await self._handle_request_feedback(interview_id, data)
             else:
                 logger.warning(f"Unknown message type: {message_type}")
         
@@ -137,18 +142,45 @@ class ConnectionManager:
             })
     
     async def _handle_next_question(self, interview_id: str, data: dict):
-        """Handle next question command"""
-        question_index = data.get("question_index", 0)
-        
-        if interview_id in self.interview_sessions:
-            self.interview_sessions[interview_id]["current_question"] = question_index
+        """Handle next question command with LangChain integration"""
+        try:
+            resume_info = data.get("resume_info", {})
+            conversation_history = data.get("conversation_history", [])
+            position = data.get("position", "Software Engineer")
+            
+            # Add conversation history to LangChain memory
+            for qa_pair in conversation_history:
+                langchain_service.add_to_conversation(
+                    interview_id=interview_id,
+                    question=qa_pair.get("question", ""),
+                    response=qa_pair.get("answer", "")
+                )
+            
+            # Generate next question using LangChain
+            asked_questions = [qa.get("question", "") for qa in conversation_history]
+            next_question = await langchain_service.generate_next_question(
+                interview_id=interview_id,
+                resume_info=resume_info,
+                position=position,
+                asked_questions=asked_questions
+            )
+            
+            if interview_id in self.interview_sessions:
+                self.interview_sessions[interview_id]["current_question"] += 1
             
             await self.send_to_interview(interview_id, {
-                "type": "question_changed",
+                "type": "next_question",
                 "data": {
-                    "question_index": question_index,
+                    "question": next_question,
                     "timestamp": datetime.now().isoformat()
                 }
+            })
+            
+        except Exception as e:
+            logger.error(f"Error generating next question: {str(e)}")
+            await self.send_to_interview(interview_id, {
+                "type": "error",
+                "message": "Error generating next question"
             })
     
     async def _handle_transcript_update(self, interview_id: str, data: dict):
@@ -160,5 +192,64 @@ class ConnectionManager:
                 "timestamp": datetime.now().isoformat()
             }
         })
+    
+    async def _handle_candidate_response(self, interview_id: str, data: dict):
+        """Handle candidate response and add to conversation memory"""
+        try:
+            question = data.get("question", "")
+            response = data.get("response", "")
+            
+            # Add to LangChain conversation memory
+            langchain_service.add_to_conversation(
+                interview_id=interview_id,
+                question=question,
+                response=response
+            )
+            
+            await self.send_to_interview(interview_id, {
+                "type": "response_received",
+                "data": {
+                    "question": question,
+                    "response": response,
+                    "timestamp": datetime.now().isoformat()
+                }
+            })
+            
+        except Exception as e:
+            logger.error(f"Error handling candidate response: {str(e)}")
+            await self.send_to_interview(interview_id, {
+                "type": "error",
+                "message": "Error processing candidate response"
+            })
+    
+    async def _handle_request_feedback(self, interview_id: str, data: dict):
+        """Handle feedback request for candidate response"""
+        try:
+            question = data.get("question", "")
+            response = data.get("response", "")
+            expected_keywords = data.get("expected_keywords", [])
+            
+            # Get real-time feedback from LangChain
+            feedback = await langchain_service.provide_real_time_feedback(
+                interview_id=interview_id,
+                question=question,
+                response=response,
+                expected_keywords=expected_keywords
+            )
+            
+            await self.send_to_interview(interview_id, {
+                "type": "feedback",
+                "data": {
+                    "feedback": feedback,
+                    "timestamp": datetime.now().isoformat()
+                }
+            })
+            
+        except Exception as e:
+            logger.error(f"Error providing feedback: {str(e)}")
+            await self.send_to_interview(interview_id, {
+                "type": "error",
+                "message": "Error providing feedback"
+            })
 
 manager = ConnectionManager()
