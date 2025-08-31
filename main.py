@@ -6,9 +6,16 @@ import logging
 import openai
 from app.database import engine, Base
 from app.routers import auth, candidates, interviews, resume_analysis, reports
+from app.routers import analytics
+from app.routers import test_data
+from app.routers import chat
+from app.routers import i18n
+from app.routers import feedback
+from app.routers import faq
 from app.core.config import settings
 from app.core.logging_config import setup_logging
 from app.services.websocket_manager import manager
+import os
 
 # Setup logging
 setup_logging()
@@ -45,6 +52,14 @@ app.include_router(candidates.router, prefix="/api/v1/candidates", tags=["Candid
 app.include_router(interviews.router, prefix="/api/v1/interviews", tags=["Interviews"])
 app.include_router(resume_analysis.router, prefix="/api/v1/resume", tags=["Resume Analysis"])
 app.include_router(reports.router, prefix="/api/v1/reports", tags=["Reports"])
+app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["Analytics"])
+app.include_router(chat.router, prefix="/api/v1/chat", tags=["Chat"])
+app.include_router(i18n.router, prefix="/api/v1/i18n", tags=["i18n"])
+app.include_router(feedback.router, prefix="/api/v1/feedback", tags=["Feedback"])
+app.include_router(faq.router, prefix="/api/v1/faq", tags=["FAQ"])
+
+if getattr(settings, "ENV", "development") in ["development", "testing", "test"] or os.environ.get("ENV") in ["development", "testing", "test"]:
+    app.include_router(test_data.router, prefix="/api/v1/test-data", tags=["Test Data"])
 
 @app.get("/")
 async def root():

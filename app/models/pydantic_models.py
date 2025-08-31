@@ -13,6 +13,7 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
     role: str = "recruiter"
+    language: Optional[str] = "en"
 
 class UserCreate(UserBase):
     password: str
@@ -94,5 +95,55 @@ class InterviewResponse(InterviewBase):
     recommendation: Optional[str] = None
     created_at: datetime
     
+    class Config:
+        from_attributes = True
+
+class ChatMessageCreate(BaseModel):
+    interview_id: str
+    sender_id: str
+    sender_role: str
+    content: str
+    message_type: str = "text"
+
+class ChatMessageResponse(BaseModel):
+    id: str
+    interview_id: str
+    sender_id: str
+    sender_role: str
+    content: str
+    message_type: str
+    created_at: datetime
+    class Config:
+        from_attributes = True
+
+class FeedbackCreate(BaseModel):
+    user_id: Optional[str] = None
+    interview_id: Optional[str] = None
+    content: str
+    rating: Optional[int] = None
+
+class FeedbackResponse(BaseModel):
+    id: str
+    user_id: Optional[str] = None
+    interview_id: Optional[str] = None
+    content: str
+    rating: Optional[int] = None
+    created_at: datetime
+    class Config:
+        from_attributes = True
+
+class InterviewNoteCreate(BaseModel):
+    interview_id: str
+    user_id: str
+    content: str
+    type: str = "note"  # note or alert
+
+class InterviewNoteResponse(BaseModel):
+    id: str
+    interview_id: str
+    user_id: str
+    content: str
+    type: str
+    created_at: datetime
     class Config:
         from_attributes = True

@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
+from pydantic import BaseModel
+from typing import Optional
 
 from app.database import get_db
 from app.models.database_models import User
@@ -13,6 +15,10 @@ from app.core.config import settings
 router = APIRouter()
 security = HTTPBearer()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -53,7 +59,9 @@ async def register_user(user: UserCreate, db: Session = Depends(get_db)):
     return db_user
 
 @router.post("/login")
-async def login_user(email: str, password: str, db: Session = Depends(get_db)):
+async def login_user(payload: LoginRequest, db: Session = Depends(get_db)):
+    email = payload.email
+    password = payload.password
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
@@ -68,3 +76,20 @@ async def login_user(email: str, password: str, db: Session = Depends(get_db)):
     )
     
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/me/language", response_model=dict)
+async def get_user_language(current_user_id: Optional[str] = None, db: Session = Depends(get_db)):
+    # For demo, get first user if no auth
+    user = db.query(User).filter(User.id == current_user_id).first() if current_user_id else db.query(User).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"language": user.language}
+
+@router.put("/me/language", response_model=dict)
+async def update_user_language(language: str, current_user_id: Optional[str] = None, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == current_user_id).first() if current_user_id else db.query(User).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.language = language
+    db.commit()
+    return {"language": user.language}

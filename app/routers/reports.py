@@ -12,7 +12,22 @@ async def get_interview_report(interview_id: str, db: Session = Depends(get_db))
     interview = db.query(Interview).filter(Interview.id == interview_id).first()
     if not interview:
         raise HTTPException(status_code=404, detail="Interview not found")
-    
+    if not interview.candidate:
+        raise HTTPException(status_code=404, detail="Candidate not found for this interview")
+    # Check for at least one score or analysis field
+    if all(
+        x is None for x in [
+            interview.technical_score,
+            interview.communication_score,
+            interview.problem_solving_score,
+            interview.cultural_fit_score,
+            interview.overall_score,
+            interview.malpractice_score,
+            interview.ai_analysis,
+            interview.recommendation
+        ]
+    ):
+        raise HTTPException(status_code=404, detail="No report data available for this interview")
     report = {
         "interview_id": interview.id,
         "candidate": {
@@ -38,5 +53,4 @@ async def get_interview_report(interview_id: str, db: Session = Depends(get_db))
         "status": interview.status,
         "created_at": interview.created_at
     }
-    
     return {"success": True, "data": report}

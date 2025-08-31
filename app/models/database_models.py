@@ -13,6 +13,7 @@ class User(Base):
     full_name = Column(String)
     role = Column(String, default="recruiter")  # recruiter, admin, candidate
     is_active = Column(Boolean, default=True)
+    language = Column(String, default="en")  # User language preference
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
@@ -156,3 +157,40 @@ class InterviewSession(Base):
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     last_activity = Column(DateTime(timezone=True), server_default=func.now())
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    interview_id = Column(String, ForeignKey("interviews.id"), nullable=False)
+    sender_id = Column(String, ForeignKey("users.id"), nullable=False)
+    sender_role = Column(String)  # interviewer, candidate, observer, etc.
+    content = Column(Text, nullable=False)
+    message_type = Column(String, default="text")  # text, system, typing, etc.
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    # Relationships
+    interview = relationship("Interview")
+    sender = relationship("User")
+
+class Feedback(Base):
+    __tablename__ = "feedback"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=True)
+    interview_id = Column(String, ForeignKey("interviews.id"), nullable=True)
+    content = Column(Text, nullable=False)
+    rating = Column(Integer, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    # Relationships
+    user = relationship("User")
+    interview = relationship("Interview")
+
+class InterviewNote(Base):
+    __tablename__ = "interview_notes"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    interview_id = Column(String, ForeignKey("interviews.id"), nullable=False)
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    content = Column(Text, nullable=False)
+    type = Column(String, default="note")  # note or alert
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    # Relationships
+    interview = relationship("Interview")
+    user = relationship("User")

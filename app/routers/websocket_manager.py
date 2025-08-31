@@ -1,4 +1,4 @@
-from fastapi import WebSocket, WebSocketDisconnect
+from fastapi import WebSocket, WebSocketDisconnect, Query
 from typing import Dict, List
 import json
 import logging
@@ -7,6 +7,8 @@ from datetime import datetime
 from app.services.audio_service import audio_service
 from app.services.video_service import video_service
 from app.services.malpractice_service import malpractice_service
+from app.core.config import settings
+from jose import jwt, JWTError
 
 logger = logging.getLogger(__name__)
 
@@ -14,9 +16,20 @@ class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
         self.interview_sessions: Dict[str, Dict] = {}
+        self.user_sessions: Dict[str, dict] = {}  # user_id -> {role, interview_id, websocket}
     
-    async def connect(self, websocket: WebSocket, interview_id: str):
+    async def connect(self, websocket: WebSocket, interview_id: str, token: str = Query(...)):
+        # JWT authentication
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+            user_id = payload.get("sub")
+            role = payload.get("role", "candidate")
+        except JWTError:
+            await websocket.close(code=4001)
+            return
         await websocket.accept()
+        # Store user session
+        self.user_sessions[user_id] = {"role": role, "interview_id": interview_id, "websocket": websocket}
         
         if interview_id not in self.active_connections:
             self.active_connections[interview_id] = []
@@ -24,11 +37,16 @@ class ConnectionManager:
                 "current_question": 0,
                 "is_recording": False,
                 "participants": 0,
-                "start_time": datetime.now().isoformat()
+                "start_time": datetime.now().isoformat(),
+                "monitors": []  # List of user_ids monitoring
             }
         
         self.active_connections[interview_id].append(websocket)
         self.interview_sessions[interview_id]["participants"] += 1
+        
+        # Add to monitors if interviewer/admin
+        if role in ["interviewer", "admin"]:
+            self.interview_sessions[interview_id]["monitors"].append(user_id)
         
         # Send current session state
         await self.send_to_interview(interview_id, {
@@ -36,9 +54,17 @@ class ConnectionManager:
             "data": self.interview_sessions[interview_id]
         })
         
-        logger.info(f"Client connected to interview {interview_id}")
+        logger.info(f"User {user_id} ({role}) connected to interview {interview_id}")
     
     def disconnect(self, interview_id: str, websocket: WebSocket = None):
+        # Remove from user_sessions
+        for user_id, session in list(self.user_sessions.items()):
+            if session["websocket"] == websocket:
+                del self.user_sessions[user_id]
+                # Remove from monitors if present
+                if user_id in self.interview_sessions.get(interview_id, {}).get("monitors", []):
+                    self.interview_sessions[interview_id]["monitors"].remove(user_id)
+        
         if interview_id in self.active_connections:
             if websocket and websocket in self.active_connections[interview_id]:
                 self.active_connections[interview_id].remove(websocket)
@@ -69,28 +95,50 @@ class ConnectionManager:
         try:
             message_type = message.get("type")
             data = message.get("data", {})
-            
-            if message_type == "audio_chunk":
+            # Identify user
+            user_id = None
+            role = None
+            for uid, session in self.user_sessions.items():
+                if session["websocket"] == message.get("_websocket", None):
+                    user_id = uid
+                    role = session["role"]
+                    break
+            # Monitoring events
+            if message_type == "start_monitoring":
+                if role not in ["interviewer", "admin"]:
+                    await self.send_to_interview(interview_id, {"type": "error", "message": "Unauthorized to start monitoring"})
+                    return
+                self.interview_sessions[interview_id]["monitoring_active"] = True
+                await self.send_to_interview(interview_id, {"type": "monitoring_started", "by": user_id, "timestamp": datetime.now().isoformat()})
+            elif message_type == "stop_monitoring":
+                if role not in ["interviewer", "admin"]:
+                    await self.send_to_interview(interview_id, {"type": "error", "message": "Unauthorized to stop monitoring"})
+                    return
+                self.interview_sessions[interview_id]["monitoring_active"] = False
+                await self.send_to_interview(interview_id, {"type": "monitoring_stopped", "by": user_id, "timestamp": datetime.now().isoformat()})
+            elif message_type == "monitor_joined":
+                if user_id and user_id not in self.interview_sessions[interview_id]["monitors"]:
+                    self.interview_sessions[interview_id]["monitors"].append(user_id)
+                await self.send_to_interview(interview_id, {"type": "monitor_joined", "user_id": user_id, "timestamp": datetime.now().isoformat()})
+            elif message_type == "monitor_left":
+                if user_id and user_id in self.interview_sessions[interview_id]["monitors"]:
+                    self.interview_sessions[interview_id]["monitors"].remove(user_id)
+                await self.send_to_interview(interview_id, {"type": "monitor_left", "user_id": user_id, "timestamp": datetime.now().isoformat()})
+            # ... existing message types ...
+            elif message_type == "audio_chunk":
                 await self._handle_audio_chunk(interview_id, data)
-            
             elif message_type == "video_frame":
                 await self._handle_video_frame(interview_id, data)
-            
             elif message_type == "start_recording":
                 await self._handle_start_recording(interview_id)
-            
             elif message_type == "stop_recording":
                 await self._handle_stop_recording(interview_id)
-            
             elif message_type == "next_question":
                 await self._handle_next_question(interview_id, data)
-            
             elif message_type == "transcript_update":
                 await self._handle_transcript_update(interview_id, data)
-            
             else:
                 logger.warning(f"Unknown message type: {message_type}")
-        
         except Exception as e:
             logger.error(f"Error handling message: {str(e)}")
             await self.send_to_interview(interview_id, {
